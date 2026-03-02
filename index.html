@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="title">加载中...</title>
+  <style>
+    body { font-family: system-ui; margin:0; padding:20px; background:#0f0f0f; color:#fff; text-align:center; }
+    .cover { max-width:600px; margin:20px auto; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.5); }
+    audio { width:100%; max-width:600px; margin:20px auto; }
+    .btn { padding:12px 24px; margin:10px; background:#f97316; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; }
+    .list { margin-top:40px; }
+  </style>
+</head>
+<body>
+  <h1 id="songTitle">加载中...</h1>
+  <img id="cover" class="cover" src="" alt="封面">
+  <audio id="player" controls></audio>
+  <br>
+  <a id="downloadMP3" class="btn" href="#" download>下载 MP3 (320kbps)</a>
+  <a id="downloadWAV" class="btn" href="#" download>下载 WAV (无损)</a>
+  
+  <div class="list">
+    <a href="https://tracks.1804078.xyz">← 查看全部 100 首伴奏</a>
+  </div>
+
+  <script src="tracks.js"></script>
+  <script>
+    const hostname = window.location.hostname;
+    const subdomain = hostname.split('.')[0];  // 如 "jcws"
+
+    const track = tracks.find(t => t.slug === subdomain);
+    
+    if (track) {
+      document.getElementById('title').textContent = track.title + " - JCWS 免费伴奏";
+      document.getElementById('songTitle').textContent = track.title;
+      document.getElementById('cover').src = track.cover;
+      document.getElementById('player').src = track.audioMP3;
+      document.getElementById('downloadMP3').href = track.audioMP3;
+      document.getElementById('downloadWAV').href = track.audioWAV;
+    } else {
+      document.getElementById('songTitle').innerHTML = `欢迎来到 JCWS 伴奏库<br>当前子域名: ${subdomain}<br><a href="https://tracks.1804078.xyz">点击查看全部列表</a>`;
+    }
+  </script>
+</body>
+</html>
